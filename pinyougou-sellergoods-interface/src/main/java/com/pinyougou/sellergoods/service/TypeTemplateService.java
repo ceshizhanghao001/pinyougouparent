@@ -15,7 +15,7 @@ public interface TypeTemplateService {
 	 * 返回全部列表
 	 * @return
 	 */
-	public List<TbTypeTemplate> findAll();
+	public List<TbTypeTemplate> findAll(TbTypeTemplate tbTypeTemplate);
 	
 	
 	/**

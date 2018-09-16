@@ -5,6 +5,7 @@ import com.pinyougou.vo.PageResult;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface BrandService {
     List<TbBrand> findAll();
@@ -20,4 +21,6 @@ public interface BrandService {
     void dele(Long[] ids);
 
     TbBrand findOne(long id);
+
+    List<Map<Long,String>> findBrandList();
 }

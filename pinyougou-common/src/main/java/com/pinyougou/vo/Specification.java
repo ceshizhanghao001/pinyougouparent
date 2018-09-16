@@ -10,21 +10,6 @@ public class Specification implements Serializable {
     private TbSpecification specification;
     private List<TbSpecificationOption> specificationOptionList;
 
-    public TbSpecification getTbSpecification() {
-        return specification;
-    }
-
-    public void setTbSpecification(TbSpecification specification) {
-        this.specification = specification;
-    }
-
-    public List<TbSpecificationOption> getList() {
-        return specificationOptionList;
-    }
-
-    public void setList(List<TbSpecificationOption> specificationOptionList) {
-        this.specificationOptionList = specificationOptionList;
-    }
 
     public TbSpecification getSpecification() {
         return specification;

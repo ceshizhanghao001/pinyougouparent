@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/brand")
@@ -75,5 +76,10 @@ public class BrandController {
 
             TbBrand tbBrand=brandService.findOne(id);
           return  tbBrand;
+    }
+    @RequestMapping("/findBrandList")
+    @ResponseBody
+    public List<Map<Long,String>> findBrandList(){
+        return  brandService.findBrandList();
     }
 }

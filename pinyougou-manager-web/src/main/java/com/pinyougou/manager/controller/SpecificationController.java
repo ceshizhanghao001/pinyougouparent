@@ -1,6 +1,7 @@
 package com.pinyougou.manager.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.pinyougou.vo.PageResult;
 import com.pinyougou.vo.Result;
@@ -82,8 +83,9 @@ public class SpecificationController {
 	 * @return
 	 */
 	@RequestMapping("/findOne")
-	public TbSpecification findOne(Long id){
-		return specificationService.findOne(id);		
+	public Specification findOne(Long id){
+		Specification specification=specificationService.findOne(id);
+		return specification;
 	}
 	
 	/**
@@ -114,5 +116,8 @@ public class SpecificationController {
 	public PageResult search(@RequestBody TbSpecification specification, int page, int rows  ){
 		return specificationService.findPage(specification, page, rows);		
 	}
-	
+	@RequestMapping("/specificationList")
+	public List<Map<Long,String>> specificationList(){
+		return specificationService.specificationList();
+	}
 }

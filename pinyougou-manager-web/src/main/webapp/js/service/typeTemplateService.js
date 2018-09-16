@@ -2,8 +2,9 @@
 app.service('typeTemplateService',function($http){
 	    	
 	//读取列表数据绑定到表单中
-	this.findAll=function(){
-		return $http.get('../typeTemplate/findAll.do');		
+	this.findAll=function(entity){
+		alert(entity.name);
+		return $http.post('../typeTemplate/findAll.do',entity);
 	}
 	//分页 
 	this.findPage=function(page,rows){
@@ -28,5 +29,7 @@ app.service('typeTemplateService',function($http){
 	//搜索
 	this.search=function(page,rows,searchEntity){
 		return $http.post('../typeTemplate/search.do?page='+page+"&rows="+rows, searchEntity);
-	}    	
+	}
+
+
 });

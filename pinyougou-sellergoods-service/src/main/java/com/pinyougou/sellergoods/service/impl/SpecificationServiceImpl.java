@@ -1,8 +1,12 @@
 package com.pinyougou.sellergoods.service.impl;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.pinyougou.mapper.TbSpecificationOptionMapper;
 import com.pinyougou.pojo.TbSpecificationOption;
+import com.pinyougou.pojo.TbSpecificationOptionExample;
 import com.pinyougou.vo.PageResult;
 import com.pinyougou.vo.Specification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +57,8 @@ public class SpecificationServiceImpl implements SpecificationService {
 	@Override
 	public void add(Specification specification) {
 
-		specificationMapper.insert(specification.getTbSpecification());
-		for (TbSpecificationOption tbSpecificationOption:specification.getList()) {
+		specificationMapper.insert(specification.getSpecification());
+		for (TbSpecificationOption tbSpecificationOption:specification.getSpecificationOptionList()) {
 				tbSpecificationOption.setSpecId(specification.getSpecification().getId());
 			tbSpecificationOptionMapper.insert(tbSpecificationOption);
 		}
@@ -75,8 +79,18 @@ public class SpecificationServiceImpl implements SpecificationService {
 	 * @return
 	 */
 	@Override
-	public TbSpecification findOne(Long id){
-		return specificationMapper.selectByPrimaryKey(id);
+	public Specification findOne(Long id){
+		TbSpecification tbSpecification = specificationMapper.selectByPrimaryKey(id);
+		TbSpecificationOptionExample tbSpecificationOptionExample=new TbSpecificationOptionExample();
+		TbSpecificationOptionExample.Criteria criteria = tbSpecificationOptionExample.createCriteria();
+		criteria.andSpecIdEqualTo(id);
+		List<TbSpecificationOption> tbSpecificationOptions = tbSpecificationOptionMapper.selectByExample(tbSpecificationOptionExample);
+
+
+		Specification specification=new Specification();
+		specification.setSpecification(tbSpecification);
+		specification.setSpecificationOptionList(tbSpecificationOptions);
+		return specification;
 	}
 
 	/**
@@ -107,5 +121,18 @@ public class SpecificationServiceImpl implements SpecificationService {
 		Page<TbSpecification> page= (Page<TbSpecification>)specificationMapper.selectByExample(example);		
 		return new PageResult(page.getTotal(), page.getResult());
 	}
-	
+
+	@Override
+	public List<Map<Long, String>> specificationList() {
+		List list=new ArrayList();
+		List<TbSpecification> tbSpecifications = specificationMapper.selectByExample(null);
+		for (TbSpecification t:tbSpecifications) {
+			Map map=new HashMap();
+			map.put("id",t.getId());
+			map.put("text",t.getSpecName());
+			list.add(map);
+		}
+		return list;
+	}
+
 }

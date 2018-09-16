@@ -29,8 +29,11 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
 	 * 查询全部
 	 */
 	@Override
-	public List<TbTypeTemplate> findAll() {
-		return typeTemplateMapper.selectByExample(null);
+	public List<TbTypeTemplate> findAll(TbTypeTemplate tbTypeTemplate) {
+		TbTypeTemplateExample tbTypeTemplateExample=new TbTypeTemplateExample();
+		Criteria criteria = tbTypeTemplateExample.createCriteria();
+		criteria.andNameLike("%"+tbTypeTemplate.getName()+"%");
+		return typeTemplateMapper.selectByExample(tbTypeTemplateExample);
 	}
 
 	/**

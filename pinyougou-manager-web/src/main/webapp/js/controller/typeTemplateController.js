@@ -1,11 +1,11 @@
  //控制层 
-app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemplateService){	
+app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemplateService,specificationService,brandService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
     //读取列表数据绑定到表单中  
 	$scope.findAll=function(){
-		typeTemplateService.findAll().success(
+		typeTemplateService.findAll( $scope.entity).success(
 			function(response){
 				$scope.list=response;
 			}			
@@ -76,5 +76,26 @@ app.controller('typeTemplateController' ,function($scope,$controller   ,typeTemp
 			}			
 		);
 	}
-    
+	$scope.findList=function(){
+        $scope.findBrandList();
+        $scope.findSpecificationList();
+	}
+    $scope.brandList={data:[]};
+    $scope.findBrandList=function () {
+        brandService.findBrandList().success(function (response) {
+            $scope.brandList={data:response};
+        })
+    };
+    $scope.specificationList={data:[]};
+    $scope.findSpecificationList=function () {
+        specificationService.specificationList().success(function (response) {
+            $scope.specificationList={data:response};
+        })
+    };
+    $scope.addTableRow=function () {
+		$scope.entity.customAttributeItems.push({});
+    }
+    $scope.deleTableRow=function (index) {
+        $scope.entity.customAttributeItems.splice(index,1);
+    }
 });	
